@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Swadeshi Bazar</string>
+    <string name="welcome_message">Welcome to Swadeshi Bazar</string>
+    <string name="app_logo">A Digital Farmers\' Market App</string>
+    <string name="sign_in_prompt">If you already Registered then Sign In</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
 </resources>
