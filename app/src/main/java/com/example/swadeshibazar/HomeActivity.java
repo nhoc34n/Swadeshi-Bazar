@@ -20,8 +20,10 @@ public class HomeActivity extends AppCompatActivity {
     private LinearLayout homeButton, buySellButton, getLoanButton, accountButton;
 
     private FirebaseAuth mAuth;
-    public static final String PREFS_NAME = "UserPrefs"; // Changed to public
-    public static final String KEY_USER_TYPE = "userType"; // Changed to public
+
+    // Constants for SharedPreferences
+    public static final String PREFS_NAME = "UserPreferences";
+    public static final String KEY_USER_TYPE = "KEY_USER_TYPE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,101 +66,49 @@ public class HomeActivity extends AppCompatActivity {
         accountButton = findViewById(R.id.accountButton);
 
         // Set up click listeners for top section buttons
-        buyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToBuy();
-            }
-        });
-
-        sellButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigateToSell();
-            }
-        });
+        buyButton.setOnClickListener(v -> navigateToBuy());
+        sellButton.setOnClickListener(v -> navigateToSell());
 
         // Set up click listeners for category buttons
-        seedsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCategory("Seeds");
-            }
-        });
-
-        cropsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCategory("Crops");
-            }
-        });
-
-        livestockButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCategory("Livestock");
-            }
-        });
-
-        soilButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCategory("Soil");
-            }
-        });
-
-        vegetableButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCategory("Vegetables");
-            }
-        });
-
-        homemadeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCategory("Homemade");
-            }
-        });
+        seedsButton.setOnClickListener(v -> showCategory("Seeds"));
+        cropsButton.setOnClickListener(v -> showCategory("Crops"));
+        livestockButton.setOnClickListener(v -> showCategory("Livestock"));
+        soilButton.setOnClickListener(v -> showCategory("Soil"));
+        vegetableButton.setOnClickListener(v -> showCategory("Vegetables"));
+        homemadeButton.setOnClickListener(v -> showCategory("Homemade"));
 
         // Bottom navigation button listeners
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(HomeActivity.this, "Home selected", Toast.LENGTH_SHORT).show();
-            }
+        homeButton.setOnClickListener(v -> {
+            Toast.makeText(HomeActivity.this, "Home selected", Toast.LENGTH_SHORT).show();
         });
 
-
-        getLoanButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(HomeActivity.this, "Loan section selected", Toast.LENGTH_SHORT).show();
-                // Navigate to loan or news section if needed
-            }
+        buySellButton.setOnClickListener(v -> {
+            Toast.makeText(HomeActivity.this, "Buy/Sell section selected", Toast.LENGTH_SHORT).show();
         });
 
-        accountButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(HomeActivity.this, "Account section selected", Toast.LENGTH_SHORT).show();
-                // Navigate to account section if needed
-            }
+        getLoanButton.setOnClickListener(v -> {
+            Toast.makeText(HomeActivity.this, "Loan section selected", Toast.LENGTH_SHORT).show();
+            // Add navigation logic to Loan section
+        });
+
+        accountButton.setOnClickListener(v -> {
+            Toast.makeText(HomeActivity.this, "Account section selected", Toast.LENGTH_SHORT).show();
+            // Add navigation logic to Account section
         });
     }
 
     private void navigateToBuy() {
         Toast.makeText(HomeActivity.this, "Navigating to Buy Products", Toast.LENGTH_SHORT).show();
-        // Add navigation logic to Buy Activity or Buy Product screen if needed
+        // Add navigation logic to Buy Activity or Buy Product screen
     }
 
     private void navigateToSell() {
         Toast.makeText(HomeActivity.this, "Navigating to Sell Products", Toast.LENGTH_SHORT).show();
-        // Add navigation logic to Sell Activity or Sell Product screen if needed
+        // Add navigation logic to Sell Activity or Sell Product screen
     }
 
     private void showCategory(String category) {
         Toast.makeText(this, "Selected category: " + category, Toast.LENGTH_SHORT).show();
-        // Handle category click and navigate to respective category page if needed
+        // Add navigation logic for selected category
     }
 }

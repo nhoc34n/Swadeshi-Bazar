@@ -14,48 +14,39 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class activity_login extends AppCompatActivity {
 
     private RadioGroup userTypeGroup;
-    private RadioButton radioFarmer;
-    private RadioButton radioConsumer;
-    private EditText editEmail;
-    private EditText editPassword;
+    private EditText editEmail, editPassword;
     private TextView textViewRegister;
     private FirebaseAuth mAuth;
-    private void saveUserTypeToPreferences(String userType) {
-        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("KEY_USER_TYPE", userType);
-        editor.apply();
-    }
 
+    private static final String PREFS_NAME = "UserPreferences";
+    private static final String KEY_USER_TYPE = "KEY_USER_TYPE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialize UI components
+        // Initialise UI components
         userTypeGroup = findViewById(R.id.userTypeGroup);
-        radioFarmer = findViewById(R.id.radioFarmer);
-        radioConsumer = findViewById(R.id.radioConsumer);
         editEmail = findViewById(R.id.editEmail);
         editPassword = findViewById(R.id.editPassword);
         textViewRegister = findViewById(R.id.textViewRegister);
 
-        // Initialize Firebase Auth
+        // Initialise Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        // Set OnClickListener for the Login button
+        // Set onClick listeners
         findViewById(R.id.buttonLogin).setOnClickListener(v -> login());
-
-        // Set clickable span for "Register"
         setRegisterClickableSpan();
     }
 
@@ -90,16 +81,16 @@ public class activity_login extends AppCompatActivity {
         String email = editEmail.getText().toString().trim();
         String password = editPassword.getText().toString().trim();
 
-        // Ensure a user type is selected
+        // Ensure user type is selected
         int selectedUserTypeId = userTypeGroup.getCheckedRadioButtonId();
         if (selectedUserTypeId == -1) {
-            Toast.makeText(this, "Select a user type", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please select a user type", Toast.LENGTH_SHORT).show();
             return;
         }
         RadioButton selectedRadioButton = findViewById(selectedUserTypeId);
         String userType = selectedRadioButton.getText().toString();
 
-        // Validate email and password
+        // Validate input fields
         if (email.isEmpty()) {
             Toast.makeText(this, "Enter your email", Toast.LENGTH_SHORT).show();
             return;
@@ -114,17 +105,29 @@ public class activity_login extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
-                        saveUserTypeToPreferences(userType);
-
-                        Toast.makeText(activity_login.this, "Login successful as " + userType, Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(activity_login.this, HomeActivity.class); // Ensure HomeActivity is implemented
-                        startActivity(intent);
-                        finish();
+                        if (user != null) {
+                            saveUserTypeToPreferences(userType);
+                            navigateToHome(userType);
+                        } else {
+                            Toast.makeText(activity_login.this, "User not found", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         Toast.makeText(activity_login.this, "Login failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
+    private void saveUserTypeToPreferences(String userType) {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_USER_TYPE, userType);
+        editor.apply();
+    }
 
+    private void navigateToHome(String userType) {
+        Toast.makeText(this, "Login successful as " + userType, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(activity_login.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

@@ -1,18 +1,21 @@
 package com.example.swadeshibazar;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.widget.Button;
+
+
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
+import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.AuthResult;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,7 +32,7 @@ public class signup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        // Initialize Firebase
+        // Initialize Firebase components
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
@@ -42,7 +45,7 @@ public class signup extends AppCompatActivity {
         userTypeGroup = findViewById(R.id.userTypeGroup);
         ImageButton buttonSignup = findViewById(R.id.buttonSignup);
 
-        // Set OnClickListener for Sign-Up button
+        // Set OnClickListener for the Sign-Up button
         buttonSignup.setOnClickListener(v -> registerUser());
     }
 
@@ -53,18 +56,18 @@ public class signup extends AppCompatActivity {
         String password = editPassword.getText().toString().trim();
         String confirmPassword = editConfirmPassword.getText().toString().trim();
 
-        // Ensure a user type is selected
+        // Validate user type selection
         int selectedUserTypeId = userTypeGroup.getCheckedRadioButtonId();
         if (selectedUserTypeId == -1) {
-            Toast.makeText(this, "Select a user type", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please select a user type", Toast.LENGTH_SHORT).show();
             return;
         }
         RadioButton selectedRadioButton = findViewById(selectedUserTypeId);
         String userType = selectedRadioButton.getText().toString();
 
-        // Validate input fields
-        if (TextUtils.isEmpty(name)) {
-            Toast.makeText(this, "Enter your name", Toast.LENGTH_SHORT).show();
+        // Validate inputs
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(number) || TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(email)) {
@@ -76,7 +79,7 @@ public class signup extends AppCompatActivity {
             return;
         }
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Enter a password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter your password", Toast.LENGTH_SHORT).show();
             return;
         }
         if (password.length() < 6) {
@@ -107,21 +110,36 @@ public class signup extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(signup.this, "Sign-Up Successful", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(signup.this, activity_login.class);
-                        startActivity(intent);
-                        finish();
+                        redirectToLogin();
                     } else {
                         Toast.makeText(signup.this, "Failed to save user data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    // User class for storing user details in Firebase Realtime Database
-    public static class User {
-        public String userId, name, email, number, userType;
+    private void redirectToLogin() {
+        // Navigate to LoginActivity
+        Intent intent = new Intent(signup.this, activity_login.class);
+        startActivity(intent);
+        finish();
+    }
 
+
+
+
+
+
+
+    // User model class to store user data in Firebase Database
+    public static class User {
+        public String userId;
+        public String name;
+        public String email;
+        public String number;
+        public String userType;
+
+        // Default constructor required for Firebase
         public User() {
-            // Default constructor required for Firebase
         }
 
         public User(String userId, String name, String email, String number, String userType) {
