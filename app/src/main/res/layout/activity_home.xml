@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/searchBar"
         android:layout_marginTop="10dp"
-        android:columnCount="2"
+        android:columnCount="3"
         android:padding="16dp"
         android:visibility="gone">
 
@@ -141,6 +141,75 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Buy Crops"
+                android:textColor="#6D6D6D"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buyProductLivestocks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="@drawable/livestock"
+                android:contentDescription="Buy Livestocks" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buy Livestocks"
+                android:textColor="#6D6D6D"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buyProductVegetables"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="@drawable/vegetable"
+                android:contentDescription="Buy Vegetables" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buy Vegetables"
+                android:textColor="#6D6D6D"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buyProductHomemade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="@drawable/hmade"
+                android:contentDescription="Buy Homemade" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buy Homemade"
                 android:textColor="#6D6D6D"
                 android:textSize="14sp" />
         </LinearLayout>

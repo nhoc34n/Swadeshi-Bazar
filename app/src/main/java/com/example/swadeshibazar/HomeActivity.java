@@ -62,10 +62,13 @@ public class HomeActivity extends AppCompatActivity {
         // Set click listeners for each category in the sell grid
         findViewById(R.id.buyProductSeed).setOnClickListener(v -> showCategoryMessage("Buy Seeds"));
         findViewById(R.id.buyProductCrops).setOnClickListener(v -> showCategoryMessage("Buy Crops"));
+        findViewById(R.id.buyProductLivestocks).setOnClickListener(v -> showCategoryMessage("Buy Livestocks"));
+        findViewById(R.id.buyProductVegetables).setOnClickListener(v -> showCategoryMessage("Buy Vegetables"));
+        findViewById(R.id.buyProductHomemade).setOnClickListener(v -> showCategoryMessage("Buy Homemade"));
 
         findViewById(R.id.addSeedButton).setOnClickListener(v -> showCategoryMessage("Seed"));
         findViewById(R.id.addCropsButton).setOnClickListener(v -> showCategoryMessage("Crops"));
-        findViewById(R.id.addLivestockButton).setOnClickListener(v -> showCategoryMessage("Livestock"));
+        findViewById(R.id.addLivestockButton).setOnClickListener(v -> showCategoryMessage("Livestocks"));
         findViewById(R.id.addVegetableButton).setOnClickListener(v -> showCategoryMessage("Vegetables"));
         findViewById(R.id.addHomemadeButton).setOnClickListener(v -> showCategoryMessage("Homemade"));
     }
